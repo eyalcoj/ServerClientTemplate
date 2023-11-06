@@ -2,8 +2,8 @@ import socket
 import threading
 from abc import ABC, abstractmethod
 
-from src import protocols
-from src.protocols import PackageType
+from src.protocols import protocol_socket_level
+from src.protocols.protocol_socket_level import PackageType
 
 HEADER = 64
 PORT = 5050
@@ -38,7 +38,7 @@ class Server_socket_level(ABC):
             connected = self.is_connected(conn, addr)
 
     def receive_data(self, conn, addr):
-        data = protocols.receive_package(conn)
+        data = protocol_socket_level.receive_package(conn)
         # TODO: להבין למה זה עושה מלא "None"
         if data is not None:
             self.data = data
@@ -46,7 +46,7 @@ class Server_socket_level(ABC):
 
     @staticmethod
     def send_data(conn, addr, data, packageType: PackageType):
-        protocols.send_package(data, conn, packageType)
+        protocol_socket_level.send_package(data, conn, packageType)
         print(f"[SEND_DATA] Server_socket_level send to {addr}: {data}")
 
     @abstractmethod

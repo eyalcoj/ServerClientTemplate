@@ -1,8 +1,8 @@
 import socket
 from abc import ABC, abstractmethod
 
-from src import protocols
-from src.protocols import PackageType
+from src.protocols import protocol_socket_level
+from src.protocols.protocol_socket_level import PackageType
 
 HEADER = 64
 PORT = 5050
@@ -19,11 +19,11 @@ class Client_socket_level(ABC):
         self.__client.connect(ADDR)
 
     def send_data(self, data, packageType: PackageType):
-        protocols.send_package(data, self.__client, packageType)
+        protocol_socket_level.send_package(data, self.__client, packageType)
         print(f"[SEND_DATA] Client send to {SERVER}: {data}")
 
     def receive_data(self, conn):
-        data = protocols.receive_package(conn)
+        data = protocol_socket_level.receive_package(conn)
         # TODO: להבין למה זה עושה מלא "None"
         if data is not None:
             self.data = data
