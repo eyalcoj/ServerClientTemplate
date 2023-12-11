@@ -1,15 +1,10 @@
-from src.servers.server_socket_level import Server_socket_level
+from src.data_base import ServerDataBase
+from src.servers.server_socket_level import ServerSocketLevel
 
 DISCONNECT_MESSAGE = "!"
 
 
-class Server_data_level(Server_socket_level):
-    def handle_data(self):
-        pass
-
-    def is_connected(self, conn, addr):
-        if self.data == DISCONNECT_MESSAGE:
-            print(f"[DISCONNECT] {addr} disconnected.")
-            conn.close()
-            return False
-        return True
+class ServerDataLevel:
+    def __init__(self, server_data_base: ServerDataBase, server_socket_level: ServerSocketLevel):
+        self.server_data_base = server_data_base
+        self.server_socket_level = server_socket_level

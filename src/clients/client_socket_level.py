@@ -12,23 +12,20 @@ SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER, PORT)
 
 
-class Client_socket_level(ABC):
+class ClientSocketLevel:
     def __init__(self):
         self.data = None
         self.__client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.__client.connect(ADDR)
+        input("+++++++++++")
 
     def send_data(self, data, packageType: PackageType):
         protocol_socket_level.send_package(data, self.__client, packageType)
         print(f"[SEND_DATA] Client send to {SERVER}: {data}")
 
-    def receive_data(self, conn):
-        data = protocol_socket_level.receive_package(conn)
+    def receive_data(self):
+        data = protocol_socket_level.receive_package(self.__client)
         # TODO: להבין למה זה עושה מלא "None"
         if data is not None:
             self.data = data
             print(f"[RECEIVE_DATA] Client receive from {SERVER}: {self.data}")
-
-    @abstractmethod
-    def handle_data(self):
-        pass

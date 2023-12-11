@@ -1,6 +1,9 @@
-from src.clients.client_socket_level import Client_socket_level
 
 
-class Client_data_level(Client_socket_level):
+class ClientDataLevel:
+
+    def __init__(self, user_name: str):
+        pass
+
     def handle_data(self):
         pass
