@@ -1,6 +1,6 @@
-from data_base import ServerDataBase
-from servers.server_data_level import ServerDataLevel
-from servers.server_socket_level import ServerSocketLevel
+from src.data_base import ServerDataBase
+from src.servers.server_data_level import ServerDataLevel
+from src.servers.server_socket_level import ServerSocketLevel
 
 
 class MainServer:

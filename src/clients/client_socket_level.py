@@ -1,6 +1,7 @@
 import socket
 from abc import ABC, abstractmethod
 
+from src.data_base import UserData
 from src.protocols import protocol_socket_level
 from src.protocols.protocol_socket_level import PackageType
 
@@ -14,7 +15,7 @@ ADDR = (SERVER, PORT)
 
 class ClientSocketLevel:
     def __init__(self):
-        self.data = None
+        self.__user_data = UserData("2231")
         self.__client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.__client.connect(ADDR)
         input("+++++++++++")
@@ -27,5 +28,5 @@ class ClientSocketLevel:
         data = protocol_socket_level.receive_package(self.__client)
         # TODO: להבין למה זה עושה מלא "None"
         if data is not None:
-            self.data = data
+            self.__user_data.set_msg(data)
             print(f"[RECEIVE_DATA] Client receive from {SERVER}: {self.data}")

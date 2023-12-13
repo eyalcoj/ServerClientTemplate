@@ -1,5 +1,5 @@
-from clients.client_data_level import ClientDataLevel
-from clients.client_socket_level import ClientSocketLevel
+from src.clients.client_data_level import ClientDataLevel
+from src.clients.client_socket_level import ClientSocketLevel
 
 
 class MainClient:
