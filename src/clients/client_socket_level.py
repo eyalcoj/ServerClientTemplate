@@ -14,7 +14,6 @@ ADDR = (SERVER, PORT)
 
 class Client_socket_level(ABC):
     def __init__(self):
-        self.data = None
         self.__client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.__client.connect(ADDR)
 
