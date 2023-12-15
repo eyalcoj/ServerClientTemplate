@@ -2,8 +2,8 @@ import socket
 import threading
 from dataclasses import dataclass
 
-from NEW import protocol
-from NEW.protocol import PacketHandling, PacketId
+from src import protocol
+from src.protocol import PacketHandling, PacketId
 
 PORT = 5050
 SERVER = socket.gethostbyname(socket.gethostname())
@@ -45,7 +45,7 @@ class ClientData(PacketHandling):
         self.__connection_data.get_conn().close()
         print(f"[CONNECTION CLOSED] to server disconnected.")
 
-    def send_data(self, data, packet_id: PacketId):
+    def send_data(self, data: str, packet_id: PacketId):
         protocol.send_package(self.crate_packet(packet_id, data), self.__connection_data.get_conn())
         print(f"[SEND_DATA] Client send to server: {packet_id, data}")
 

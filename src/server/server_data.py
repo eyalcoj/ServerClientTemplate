@@ -2,8 +2,8 @@ import socket
 import threading
 from dataclasses import dataclass
 
-from NEW import protocol
-from NEW.protocol import PacketHandling, PacketId
+from src import protocol
+from src.protocol import PacketHandling, PacketId
 
 PORT = 5050
 SERVER = socket.gethostbyname(socket.gethostname())
