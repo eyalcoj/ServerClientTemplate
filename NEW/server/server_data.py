@@ -3,6 +3,7 @@ import threading
 from dataclasses import dataclass
 
 from NEW import protocol
+from NEW.protocol import PacketHandling, PacketId
 
 PORT = 5050
 SERVER = socket.gethostbyname(socket.gethostname())
@@ -22,16 +23,19 @@ class ConnectionData:
         return self.__addr
 
 
-class ServerUser:
+class ServerUser(PacketHandling):
     def __init__(self, connection_data: ConnectionData):
         self.__connection_data = connection_data
         self.__is_handle_connection = False
+        self.__user_data = []
 
     def handle_client(self):
         self.__is_handle_connection = True
         print(f"[NEW CONNECTION] {self.__connection_data.get_addr()} connected.")
         while self.__is_handle_connection:
-            self.receive_data()
+            data = self.receive_data()
+            self.__user_data.append(data)
+            self.brake_packet(data)
         self.__connection_data.get_conn().close()
         print(f"[CONNECTION CLOSED] {self.__connection_data.get_addr()} disconnected.")
 
@@ -41,9 +45,8 @@ class ServerUser:
             print(f"[RECEIVE_DATA] Server_socket_level receive from {self.__connection_data.get_addr()}: {data}")
             return data
 
-    @staticmethod
-    def send_data(connection_data_of_addressee: ConnectionData, data):
-        protocol.send_package(data, connection_data_of_addressee.get_conn())
+    def send_data(self, connection_data_of_addressee: ConnectionData, packet_id: PacketId, data):
+        protocol.send_package(self.crate_packet(packet_id, data), connection_data_of_addressee.get_conn())
         print(f"[SEND_DATA] Server_socket_level send to {connection_data_of_addressee.get_addr()}: {data}")
 
     def get_is_handle_connection(self):
@@ -53,8 +56,13 @@ class ServerUser:
         # TODO: need to check if this method works
         self.__is_handle_connection = False
 
-    def handle_data(self, data):
-        pass
+    def __text_handling(self, data):
+        print(data)
+
+    def __img_handling(self, data):
+        print("save... \n download img")
+
+
 class ServerData:
     def __init__(self):
         self.__server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
