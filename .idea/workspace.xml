@@ -4,23 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0007d325-bebf-4e90-921e-554a6b2874f5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/client_data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/protocol.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/server_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/clients/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/clients/client_data_level.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/clients/client_data_level.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/clients/client_socket_level.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/clients/client_socket_level.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/protocols/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/protocols/protocol_socket_level.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocols/protocol_socket_level.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/servers/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/servers/server_data_level.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/servers/server_data_level.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/servers/server_socket_level.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/servers/server_socket_level.py" afterDir="false" />
-    </list>
+    <list default="true" id="0007d325-bebf-4e90-921e-554a6b2874f5" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
