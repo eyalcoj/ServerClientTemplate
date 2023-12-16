@@ -1,27 +1,8 @@
-import socket
-import threading
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 
 from src import protocol
+from src.data_class import ConnectionData
 from src.protocol import PacketType
-
-PORT = 5050
-SERVER = socket.gethostbyname(socket.gethostname())
-ADDR = (SERVER, PORT)
-FORMAT = 'utf-8'
-
-
-@dataclass
-class ConnectionData:
-    __conn: socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    __addr: str
-
-    def get_conn(self):
-        return self.__conn
-
-    def get_addr(self):
-        return self.__addr
 
 
 class PacketHandler(ABC):
@@ -40,7 +21,7 @@ class PacketHandler(ABC):
         pass
 
 
-class ServerUser(PacketHandler):
+class User(PacketHandler):
     def __init__(self, connection_data: ConnectionData):
         self.__connection_data = connection_data
         self.__is_handle_connection = False
@@ -78,35 +59,3 @@ class ServerUser(PacketHandler):
 
     def __img_handling(self, data):
         print("save... \n download img")
-
-
-class ServerData:
-    def __init__(self):
-        self.__server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.__server.bind(ADDR)
-        self.__users = []
-        self.__run = True
-        self.__start_connections()
-
-    def __start_connections(self):
-        self.__server.listen()
-        print("[RUN] server is running.")
-        while self.__run:
-            conn, addr = self.__server.accept()
-            connection_data = ConnectionData(conn, addr)
-            server_user = ServerUser(connection_data)
-            self.__users.append(server_user)
-            thread = threading.Thread(target=server_user.handle_client)
-            thread.start()
-
-    @staticmethod
-    def disconnect_user(server_user: ServerUser):
-        # TODO: need to check if this method works
-        server_user.disconnect_user()
-        del server_user
-
-    def disconnect_server(self):
-        # TODO: need to check if this method works
-        for server_user in self.__users:
-            self.disconnect_user(server_user)
-        self.__run = False

@@ -1,4 +1,4 @@
-from src.server.server_data import ServerData
+from src.server.server_connection import ServerConnection
 
 if __name__ == "__main__":
-    server_data = ServerData()
+    server = ServerConnection()

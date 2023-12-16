@@ -5,10 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0007d325-bebf-4e90-921e-554a6b2874f5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/data_class.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/server_connection.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/client_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/client_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/client_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/client_connection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/protocol.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/server_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/server_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/server_data.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

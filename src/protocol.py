@@ -1,5 +1,4 @@
 import socket
-from abc import ABC, abstractmethod
 from enum import Enum
 
 
@@ -57,4 +56,3 @@ def send(packet_type: PacketType, payload: str, conn: socket.socket(socket.AF_IN
 
 def recv(conn: socket.socket(socket.AF_INET, socket.SOCK_STREAM)):
     return __extract_packet(__receive_by_socket(conn))
-
