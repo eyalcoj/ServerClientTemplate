@@ -12,8 +12,6 @@ ADDR = (SERVER, PORT)
 class ClientConnection(User):
     def __init__(self):
         super().__init__(ConnectionData(socket.socket(socket.AF_INET, socket.SOCK_STREAM), ADDR))
-        self.__is_handle_connection = False
-        self.__user_data = []
         self.__connect_to_server()
 
     def __connect_to_server(self):
