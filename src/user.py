@@ -27,7 +27,7 @@ class User(PacketHandler):
         self.__is_handle_connection = False
         self.__user_data = []
 
-    def handle_client(self):
+    def handle_connection(self):
         self.__is_handle_connection = True
         print(f"[NEW CONNECTION] {self.__connection_data.get_addr()} connected.")
         while self.__is_handle_connection:

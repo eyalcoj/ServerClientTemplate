@@ -26,7 +26,7 @@ class ServerConnection:
             connection_data = ConnectionData(conn, addr)
             server_user = User(connection_data)
             self.__users.append(server_user)
-            thread = threading.Thread(target=server_user.handle_client)
+            thread = threading.Thread(target=server_user.handle_connection)
             thread.start()
 
     @staticmethod
