@@ -34,10 +34,7 @@ def __receive_by_socket(conn: socket.socket(socket.AF_INET, socket.SOCK_STREAM))
             return payload
 
     except Exception as e:
-        if e is "[WinError 10054] An existing connection was forcibly closed by the remote host":
-            return e
-        else:
-            print(f"[ERROR] in send_package: {e}")
+        print(f"[ERROR] in send_package: {e}")
 
 
 def __wrap_packet(packet_type: PacketType, payload: str):  # why is payload string and not bytes?

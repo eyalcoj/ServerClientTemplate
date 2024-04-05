@@ -1,4 +1,4 @@
-from src.server.server_connection import ServerConnection
+from src.server.communication import ServerConnection
 
 if __name__ == "__main__":
     server = ServerConnection()
