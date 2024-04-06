@@ -1,7 +1,7 @@
 import socket
 import threading
 
-from src.abstract_user_things import BasicConnection
+from src.abstract_user_things import SingleConnection
 from src.data_class import ConnectionData
 
 
@@ -11,19 +11,13 @@ class Constance:
     ADDR = (SERVER, PORT)
 
 
-class ClientConnection(BasicConnection):
+class ClientConnection(SingleConnection):
     def __init__(self):
         __client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        print(ConnectionData(__client, Constance.ADDR))
         super().__init__(ConnectionData(__client, Constance.ADDR))
-
-    def close_connection(self):
-        super(ClientConnection, self).close_connection()
-
-    def open_connection(self):
-        self.__connection_data.get_conn().connect(self.__connection_data.get_addr())
-        print("[RUN] client is running.")
-        handle_server_thread = threading.Thread(target=self.handle_connection)
-        handle_server_thread.start()
+        self.connection_data.get_conn().connect(self.connection_data.get_addr())
+        self.open_connection()
 
     @staticmethod
     def handle_data(packet_type, data):
