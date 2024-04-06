@@ -13,7 +13,8 @@ class Constance:
 
 class ClientConnection(BasicConnection):
     def __init__(self):
-        super().__init__(ConnectionData(self.__server, Constance.ADDR))
+        __client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        super().__init__(ConnectionData(__client, Constance.ADDR))
 
     def close_connection(self):
         super(ClientConnection, self).close_connection()

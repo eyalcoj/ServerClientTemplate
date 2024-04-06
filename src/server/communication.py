@@ -1,4 +1,6 @@
+import json
 import socket
+import threading
 
 from src.abstract_user_things import BasicConnection
 from src.data_class import ConnectionData
@@ -9,6 +11,7 @@ class Constance:
     SERVER = socket.gethostbyname(socket.gethostname())
     ADDR = (SERVER, PORT)
     FORMAT = 'utf-8'
+    DATABASE_FILE_LOCATION = r""
 
 
 class ServerConnection(BasicConnection):
@@ -17,13 +20,15 @@ class ServerConnection(BasicConnection):
         self.__server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.__server.bind(Constance.ADDR)
         super().__init__(ConnectionData(self.__server, Constance.ADDR))
-        self.__server_database = ServerDatabase()
+        self.__server_database = ServerDatabase(Constance.DATABASE_FILE_LOCATION)
         self.__run = True
         self.open_connection()
 
     def open_connection(self):
         self.__server.listen()
         print("[RUN] server is running.")
+        handle_server_thread = threading.Thread(target=self.handle_connection)
+        handle_server_thread.start()
         while self.__run:
             conn, addr = self.__server.accept()
             connection_data = ConnectionData(conn, addr)
@@ -51,8 +56,20 @@ class ServerConnection(BasicConnection):
 
 
 class ServerDatabase:
-    def __init__(self):
-        self.database = {}
+    def __init__(self, filename):
+        self.filename = filename
+        self.database = self.load_data()
+
+    def load_data(self):
+        try:
+            with open(self.filename, 'r') as file:
+                return json.load(file)
+        except FileNotFoundError:
+            return {}
+
+    def save_data(self):
+        with open(self.filename, 'w') as file:
+            json.dump(self.database, file)
 
     def add_data(self, key, name=None, age=None, email=None):
         if key in self.database:
@@ -60,6 +77,7 @@ class ServerDatabase:
             return False
         else:
             self.database[key] = {"name": name, "age": age, "email": email}
+            self.save_data()  # Save data to file after adding
             print(f"Data added successfully for key '{key}'.")
             return True
 
@@ -71,6 +89,7 @@ class ServerDatabase:
                 self.database[key]["age"] = age
             if email is not None:
                 self.database[key]["email"] = email
+            self.save_data()  # Save data to file after updating
             print(f"Data updated successfully for key '{key}'.")
             return True
         else:
@@ -83,6 +102,7 @@ class ServerDatabase:
     def delete_data(self, key):
         if key in self.database:
             del self.database[key]
+            self.save_data()  # Save data to file after deletion
             print(f"Data deleted successfully for key '{key}'.")
             return True
         else:
