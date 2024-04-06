@@ -1,5 +1,5 @@
-import json
 import socket
+import pickle
 
 from src.abstract_user_things import SingleConnection
 from src.data_class import ConnectionData
@@ -30,7 +30,7 @@ class ServerConnection:
             connection_data = ConnectionData(conn, addr)
             basic_connection = UserConnection(connection_data)
             basic_connection.open_connection()
-            self.__server_database.add_data(conn, addr)
+            self.__server_database.add_data(connection_data, basic_connection=basic_connection)
 
     def remove_user(self, connection_data):
         # TODO: need to check if this method works
@@ -61,28 +61,27 @@ class ServerDatabase:
 
     def load_data(self):
         try:
-            with open(self.filename, 'r') as file:
-                return json.load(file)
+            with open(self.filename, 'rb') as file:
+                return pickle.load(file)
         except FileNotFoundError:
             return {}
 
     def save_data(self):
-        with open(self.filename, 'w') as file:
-            json.dump(self.database, file)
+        with open(self.filename, 'wb') as file:
+            pickle.dump(self.database, file)
 
-    def add_data(self, conn, addr, name=None, age=None, email=None):
-        key = f"{addr[0]}:{addr[1]}"
+    def add_data(self, key, basic_connection=None, age=None, email=None):
+        key = f"{key}"
         if key in self.database:
-            print(f"Data for {key} already exists. Use update_data method to modify existing data.")
+            print(f"Key '{key}' already exists. Use update_data method to modify existing data.")
             return False
         else:
-            self.database[key] = {"name": name, "age": age, "email": email}
+            self.database[key] = {"basic_connection": basic_connection, "age": age, "email": email}
             self.save_data()  # Save data to file after adding
-            print(f"Data added successfully for {key}.")
+            print(f"Data added successfully for key '{key}'.")
             return True
 
-    def update_data(self, conn, addr, name=None, age=None, email=None):
-        key = f"{addr[0]}:{addr[1]}"
+    def update_data(self, key, name=None, age=None, email=None):
         if key in self.database:
             if name is not None:
                 self.database[key]["name"] = name
@@ -91,25 +90,23 @@ class ServerDatabase:
             if email is not None:
                 self.database[key]["email"] = email
             self.save_data()  # Save data to file after updating
-            print(f"Data updated successfully for {key}.")
+            print(f"Data updated successfully for key '{key}'.")
             return True
         else:
-            print(f"No data found for {key}. Use add_data method to add new data.")
+            print(f"Key '{key}' does not exist. Use add_data method to add new data.")
             return False
 
-    def get_data(self, conn, addr):
-        key = f"{addr[0]}:{addr[1]}"
+    def get_data(self, key):
         return self.database.get(key, None)
 
-    def delete_data(self, conn, addr):
-        key = f"{addr[0]}:{addr[1]}"
+    def delete_data(self, key):
         if key in self.database:
             del self.database[key]
             self.save_data()  # Save data to file after deletion
-            print(f"Data deleted successfully for {key}.")
+            print(f"Data deleted successfully for key '{key}'.")
             return True
         else:
-            print(f"No data found for {key}.")
+            print(f"Key '{key}' does not exist.")
             return False
 
     def display_all_data(self):
