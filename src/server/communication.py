@@ -13,10 +13,10 @@ class Constance:
 
 class ServerConnection(BasicConnection):
 
-    def __init__(self, connection_data: ConnectionData):
-        super().__init__(connection_data)
+    def __init__(self):
         self.__server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.__server.bind(Constance.ADDR)
+        super().__init__(ConnectionData(self.__server, Constance.ADDR))
         self.__server_database = ServerDatabase()
         self.__run = True
         self.open_connection()
@@ -36,8 +36,11 @@ class ServerConnection(BasicConnection):
 
     @staticmethod
     def handle_data(packet_type, data):
-        pass
+        if packet_type == 1:
+            print(f"[CLIENT] handle text: {data}")
 
+        if packet_type == 2:
+            print(f"CLIENT] handle pic")
 
     def remove_user(self, connection_data):
         # TODO: need to check if this method works

@@ -5,15 +5,15 @@ from src.abstract_user_things import BasicConnection
 from src.data_class import ConnectionData
 
 
-# class Constance:
-#     PORT = 5050
-#     SERVER = socket.gethostbyname(socket.gethostname())
-#     ADDR = (SERVER, PORT)
+class Constance:
+    PORT = 5050
+    SERVER = socket.gethostbyname(socket.gethostname())
+    ADDR = (SERVER, PORT)
 
 
 class ClientConnection(BasicConnection):
-    def __init__(self, connection_data: ConnectionData):
-        super().__init__(connection_data)
+    def __init__(self):
+        super().__init__(ConnectionData(self.__server, Constance.ADDR))
 
     def close_connection(self):
         super(ClientConnection, self).close_connection()
