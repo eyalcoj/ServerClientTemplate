@@ -8,6 +8,7 @@ from src.protocol import PacketType
 
 class SingleConnection(ABC):
     def __init__(self, connection_data: ConnectionData):
+        self.__handle_server_thread = None
         self.connection_data = connection_data
         self.__is_handle_connection = False
 
@@ -30,14 +31,22 @@ class SingleConnection(ABC):
         print(f"[SEND_DATA] send to {self.connection_data.get_addr()}: {data}")
 
     def close_connection(self):
-        # TODO: need to check if this method works
-        self.__is_handle_connection = False
+        self.send_data(PacketType.DISCONNECT, "")
+        self.clean_disconnect()
 
     def open_connection(self):
-        handle_server_thread = threading.Thread(target=self.handle_connection)
-        handle_server_thread.start()
+        self.__handle_server_thread = threading.Thread(target=self.handle_connection)
+        self.__handle_server_thread.start()
 
-    @staticmethod
+    def clean_disconnect(self):
+        self.__is_handle_connection = False
+        self.__handle_server_thread.join()
+
+    def is_alive(self):
+        return self.__is_handle_connection and self.__handle_server_thread.is_alive()
+
     @abstractmethod
-    def handle_data(packet_type, data):
-        pass
+    def handle_data(self, packet_type, data):
+        if PacketType(packet_type) == PacketType.DISCONNECT:
+            self.clean_disconnect()
+

@@ -9,8 +9,7 @@ class Constants:
 
 
 class PacketType(Enum):
-    TEXT = 1
-    IMG = 2
+    DISCONNECT = 0
 
 
 def __send_by_socket(payload: str, conn: socket.socket(socket.AF_INET, socket.SOCK_STREAM)):

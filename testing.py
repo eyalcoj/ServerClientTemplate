@@ -2,13 +2,13 @@ import pickle
 import sqlite3
 
 # Create/connect to a SQLite database
-conn = sqlite3.connect('key_value_store.db')
-cursor = conn.cursor()
+splite3_conn = sqlite3.connect('key_value_store.db')
+cursor = splite3_conn.cursor()
 
 # Create a table to store key-value pairs
 cursor.execute('''CREATE TABLE IF NOT EXISTS key_value_pairs
                   (key TEXT PRIMARY KEY, value BLOB)''')
-conn.commit()
+splite3_conn.commit()
 
 
 # Function to add objects to a key
@@ -17,7 +17,9 @@ def add(key, name, age):
         key_str = str(key)  # Convert key to string
         data = pickle.dumps({"name": name, "age": age})
         cursor.execute('INSERT OR REPLACE INTO key_value_pairs VALUES (?, ?)', (key_str, data))
-        conn.commit()
+        splite3_conn.commit()
+    except sqlite3.IntegrityError:
+        print(f"Key '{key}' already exists.")
     except Exception as e:
         print("Error adding data:", e)
 
@@ -27,7 +29,7 @@ def remove(key):
     try:
         key_str = str(key)  # Convert key to string
         cursor.execute('DELETE FROM key_value_pairs WHERE key=?', (key_str,))
-        conn.commit()
+        splite3_conn.commit()
     except Exception as e:
         print("Error removing data:", e)
 
@@ -36,7 +38,7 @@ def remove(key):
 def update(key, name=None, age=None):
     try:
         key_str = str(key)  # Convert key to string
-        new_dict = get(key_str)
+        new_dict = get(key_str) or {}
         if name:
             new_dict["name"] = name
         if age:
@@ -44,7 +46,7 @@ def update(key, name=None, age=None):
 
         data = pickle.dumps(new_dict)
         cursor.execute('INSERT OR REPLACE INTO key_value_pairs VALUES (?, ?)', (key_str, data))
-        conn.commit()
+        splite3_conn.commit()
     except Exception as e:
         print("Error updating data:", e)
 
@@ -58,21 +60,38 @@ def get(key):
         if row:
             return pickle.loads(row[0])
         else:
+            print(f"Key '{key}' not found.")
             return None
     except Exception as e:
         print("Error retrieving data:", e)
         return None
 
 
-obj1 = ExampleObject("John", 30)
-obj2 = ExampleObject("Alice", 25)
+def test_key_value_store():
+    # Test adding data
+    add("1", "Alice", 30)
+    add("2", "Bob", 25)
+    add("3", "Charlie", 35)
 
-add(123, "shalom", 25)  # Integer key
+    # Test getting data
+    assert get("1") == {"name": "Alice", "age": 30}
+    assert get("2") == {"name": "Bob", "age": 25}
+    assert get("3") == {"name": "Charlie", "age": 35}
 
-retrieved_objects = get(123)
-print(retrieved_objects["name"])
-print(retrieved_objects["age"])
+    # Test updating data
+    update("1", age=31)
+    assert get("1") == {"name": "Alice", "age": 31}
 
-remove(123)
+    # Test removing data
+    remove("2")
+    assert get("2") is None
 
-conn.close()
+    # Test adding existing key
+    add("1", "Eve", 28)  # Should print a message that key already exists
+
+    # Test getting non-existent key
+    assert get("4") is None  # Should print a message that key is not found
+
+
+# Run the test
+test_key_value_store()

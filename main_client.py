@@ -1,4 +1,4 @@
-from src.client.communication import ClientConnection
+from src.client.communication import ClientServerConnection
 
 if __name__ == "__main__":
-    client = ClientConnection()
+    client = ClientServerConnection()

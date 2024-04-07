@@ -1,5 +1,7 @@
-import socket
 import pickle
+import socket
+import sqlite3
+import threading
 
 from src.abstract_user_things import SingleConnection
 from src.data_class import ConnectionData
@@ -10,7 +12,86 @@ class Constance:
     SERVER = socket.gethostbyname(socket.gethostname())
     ADDR = (SERVER, PORT)
     FORMAT = 'utf-8'
-    DATABASE_FILE_LOCATION = r"src/server/db.txt"
+    DATABASE_FILE_LOCATION = r"'users_database.db'"
+
+
+class ServerClientConnection(SingleConnection):
+
+    def __init__(self, connection_data: ConnectionData):
+        super().__init__(connection_data)
+
+    def handle_data(self, packet_type, data):
+        if packet_type == 1:
+            print(f"[CLIENT] handle text: {data}")
+
+        if packet_type == 2:
+            print(f"CLIENT] handle pic")
+
+class ServerDatabase:
+    def __init__(self, db_name):
+        self.conn = sqlite3.connect(db_name)
+        self.cursor = self.conn.cursor()
+        self._create_table()
+
+    def _create_table(self):
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS key_value_pairs
+                                  (key TEXT PRIMARY KEY, value BLOB)''')
+        self.conn.commit()
+
+    def add(self, key=None, user_connection=None, age=None):
+        try:
+            key_str = str(key)
+            data = pickle.dumps({"name": name, "age": age})
+            self.cursor.execute('INSERT OR REPLACE INTO key_value_pairs VALUES (?, ?)', (key_str, data))
+            self.conn.commit()
+            return True
+        except sqlite3.IntegrityError:
+            print(f"Key '{key}' already exists.")
+            return False
+        except Exception as e:
+            print("Error adding data:", e)
+            return False
+
+    def remove(self, key):
+        try:
+            key_str = str(key)
+            self.cursor.execute('DELETE FROM key_value_pairs WHERE key=?', (key_str,))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print("Error removing data:", e)
+            return False
+
+    def update(self, key, name=None, age=None):
+        try:
+            key_str = str(key)
+            new_dict = self.get(key_str) or {}
+            if name:
+                new_dict["name"] = name
+            if age:
+                new_dict["age"] = age
+
+            data = pickle.dumps(new_dict)
+            self.cursor.execute('INSERT OR REPLACE INTO key_value_pairs VALUES (?, ?)', (key_str, data))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print("Error updating data:", e)
+            return False
+
+    def get(self, key):
+        try:
+            key_str = str(key)
+            self.cursor.execute('SELECT value FROM key_value_pairs WHERE key=?', (key_str,))
+            row = self.cursor.fetchone()
+            if row:
+                return pickle.loads(row[0])
+            else:
+                print(f"Key '{key}' not found.")
+                return None
+        except Exception as e:
+            print("Error retrieving data:", e)
+            return None
 
 
 class ServerConnection:
@@ -28,91 +109,20 @@ class ServerConnection:
         while self.__run:
             conn, addr = self.__server.accept()
             connection_data = ConnectionData(conn, addr)
-            basic_connection = UserConnection(connection_data)
-            basic_connection.open_connection()
-            self.__server_database.add_data(connection_data, basic_connection=basic_connection)
+            server_client_connection = ServerClientConnection(connection_data)
+            server_client_connection.open_connection()
+            threading.Thread(target=self.menage_database_connection, args=(server_client_connection,))
+            # self.__server_database.add(connection_data)
 
-    def remove_user(self, connection_data):
+    def menage_database_connection(self, server_client_connection):
+        while server_client_connection.is_alive():
+            pass
+        self.__server_database.remove(server_client_connection)
+
+    def remove_user(self, server_client_connection):
         # TODO: need to check if this method works
         pass
 
+
     def remove_all_users(self):
         pass
-
-
-class UserConnection(SingleConnection):
-
-    def __init__(self, connection_data: ConnectionData):
-        super().__init__(connection_data)
-
-    @staticmethod
-    def handle_data(packet_type, data):
-        if packet_type == 1:
-            print(f"[CLIENT] handle text: {data}")
-
-        if packet_type == 2:
-            print(f"CLIENT] handle pic")
-
-
-class ServerDatabase:
-    def __init__(self, filename):
-        self.filename = filename
-        self.database = self.load_data()
-
-    def load_data(self):
-        try:
-            with open(self.filename, 'rb') as file:
-                return pickle.load(file)
-        except FileNotFoundError:
-            return {}
-
-    def save_data(self):
-        with open(self.filename, 'wb') as file:
-            pickle.dump(self.database, file)
-
-    def add_data(self, key, basic_connection=None, age=None, email=None):
-        key = f"{key}"
-        if key in self.database:
-            print(f"Key '{key}' already exists. Use update_data method to modify existing data.")
-            return False
-        else:
-            self.database[key] = {"basic_connection": basic_connection, "age": age, "email": email}
-            self.save_data()  # Save data to file after adding
-            print(f"Data added successfully for key '{key}'.")
-            return True
-
-    def update_data(self, key, name=None, age=None, email=None):
-        if key in self.database:
-            if name is not None:
-                self.database[key]["name"] = name
-            if age is not None:
-                self.database[key]["age"] = age
-            if email is not None:
-                self.database[key]["email"] = email
-            self.save_data()  # Save data to file after updating
-            print(f"Data updated successfully for key '{key}'.")
-            return True
-        else:
-            print(f"Key '{key}' does not exist. Use add_data method to add new data.")
-            return False
-
-    def get_data(self, key):
-        return self.database.get(key, None)
-
-    def delete_data(self, key):
-        if key in self.database:
-            del self.database[key]
-            self.save_data()  # Save data to file after deletion
-            print(f"Data deleted successfully for key '{key}'.")
-            return True
-        else:
-            print(f"Key '{key}' does not exist.")
-            return False
-
-    def display_all_data(self):
-        if self.database:
-            print("Database Contents:")
-            for key, value in self.database.items():
-                print(f"Key: {key}, Value: {value}")
-        else:
-            print("Database is empty.")
