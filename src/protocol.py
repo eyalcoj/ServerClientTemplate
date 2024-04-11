@@ -25,15 +25,15 @@ def __send_by_socket(payload: str, conn: socket.socket(socket.AF_INET, socket.SO
 
 
 def __receive_by_socket(conn: socket.socket(socket.AF_INET, socket.SOCK_STREAM)):
-    # try:
+    try:
         organized_payload_length = conn.recv(Constants.HEADER)
         if organized_payload_length:
             organized_payload_length = int(organized_payload_length.decode(Constants.FORMAT))
             payload = conn.recv(organized_payload_length).decode(Constants.FORMAT)
             return payload
-    #
-    # except Exception as e:
-    #     print(f"[ERROR] in send_package: {e}")
+
+    except Exception as e:
+        print(f"[ERROR] in send_package: {e}")
 
 
 def __wrap_packet(packet_type: PacketType, payload: str):  # why is payload string and not bytes?

@@ -1,4 +1,4 @@
-from src.server.communication import ServerConnection
+from src.server.application import ServerApplication
 
 if __name__ == "__main__":
-    server = ServerConnection()
+    server = ServerApplication()

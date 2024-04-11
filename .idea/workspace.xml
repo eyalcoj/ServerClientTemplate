@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0007d325-bebf-4e90-921e-554a6b2874f5" name="Changes" comment="" />
+    <list default="true" id="0007d325-bebf-4e90-921e-554a6b2874f5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/client/application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/gui.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/gui/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/gui/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/gui/admin_user_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/protocol.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,14 +39,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/Eyal/Documents/GitHub/server_client_template/src/servers",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Eyal/Documents/GitHub/server_client_template/src/servers&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Eyal\Documents\GitHub\server_client_template\src\servers" />
@@ -43,15 +54,15 @@
       <recent name="C:\Users\Eyal\Documents\GitHub\server_client_template" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Eyal\Documents\GitHub\ServerClientTemplate\src\client" />
+      <recent name="C:\Users\Eyal\Documents\GitHub\ServerClientTemplate\src\server\gui" />
       <recent name="C:\Users\Eyal\Documents\GitHub\server_client_template\src\main" />
       <recent name="C:\Users\Eyal\Documents\GitHub\server_client_template\src" />
       <recent name="C:\Users\Eyal\Documents\GitHub\server_client_template" />
-      <recent name="C:\Users\Eyal\Documents\GitHub\server_client_template\src\clients" />
-      <recent name="C:\Users\Eyal\Documents\GitHub\server_client_template\src\servers" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests in testing.py">
-    <configuration name="communication" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.main_client">
+    <configuration name="application" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="server_client_template" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -63,7 +74,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/server/communication.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/server/application.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -151,11 +162,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main_server (1)" />
+        <item itemvalue="Python.main_client" />
+        <item itemvalue="Python.application" />
         <item itemvalue="Python tests.Python tests in testing.py" />
         <item itemvalue="Python.testing" />
-        <item itemvalue="Python.main_client" />
-        <item itemvalue="Python.main_server (1)" />
-        <item itemvalue="Python.communication" />
       </list>
     </recent_temporary>
   </component>
