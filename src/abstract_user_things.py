@@ -16,14 +16,18 @@ class SingleConnection(ABC):
         self.__is_handle_connection = True
         print(f"[NEW CONNECTION] {self.connection_data.get_addr()} connected.")
         while self.__is_handle_connection:
+            print("shalom")
             packet_type, data = self.receive_data()
-            self.handle_data(packet_type, data)
+            if packet_type != PacketType.ERROR:
+                print("shalom", packet_type, data)
+                self.handle_data(packet_type, data)
         self.connection_data.get_conn().close()
         print(f"[CONNECTION CLOSED] {self.connection_data.get_addr()} disconnected.")
 
     def receive_data(self):
         packet_type, data = protocol.recv2(self.connection_data.get_conn())
-        print(f"[RECEIVE_DATA] receive from {self.connection_data.get_addr()}: {data}")
+        if packet_type != PacketType.ERROR:
+            print(f"[RECEIVE_DATA] receive from {self.connection_data.get_addr()}: {data}")
         return packet_type, data
 
     def send_data(self, packet_type: PacketType, data):

@@ -18,10 +18,7 @@ class Server:
         assert self.__conn is None, "check the server"
         self.__gui = AdminMainWindow(self.__conn, self.__users_database)
         self.__gui.show()
-        print("in her")
         sys.exit(app.exec_())
 
     def crate_communication(self):
-        print("crate_communication befor")
         self.__conn = ServerConnection(self.__users_database)
-        print("crate_communication after")

@@ -1,11 +1,11 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel
 
 from src.server.communication.server_client_connection import ServerClientConnection
-from src.server.user import ServerUserDatabase
+from src.server.user import ServerUserData
 
 
 class AdminUserDataWindow(QWidget):
-    def __init__(self, conn: ServerClientConnection, data_base: ServerUserDatabase):
+    def __init__(self, conn: ServerClientConnection, data_base: ServerUserData):
         super().__init__()
         self.__dict = data_base
         self.user_name = data_base.get_user().get("name")
@@ -31,7 +31,7 @@ class AdminUserDataWindow(QWidget):
             row_layout.addWidget(button)
 
         additional_button = QPushButton('Remove Row')
-        additional_button.clicked.connect(self.remove_row)
+        # additional_button.clicked.connect(self.remove_row)
         main_layout.addWidget(additional_button)
 
     def toggle_indicator(self, label):

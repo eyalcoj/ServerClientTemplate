@@ -1,4 +1,4 @@
-class ServerUserData:
+class ClientUserData:
     def __init__(self, name: str = None, is_run_keyboard: bool = None, is_run_mouse: bool = None):
         self.user = {"name": name, 'is_run_keyboard': is_run_keyboard, 'is_run_mouse': is_run_mouse}
 

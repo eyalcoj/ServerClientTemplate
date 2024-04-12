@@ -1,6 +1,7 @@
 import socket
 
 from src.abstract_user_things import SingleConnection
+from src.client.user_data import ClientUserData
 from src.data_class import ConnectionData
 
 
@@ -11,9 +12,10 @@ class Constance:
 
 
 class ClientServerConnection(SingleConnection):
-    def __init__(self):
-        __client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        super().__init__(ConnectionData(__client, Constance.ADDR))
+    def __init__(self, user_data: ClientUserData):
+        self.__client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        super().__init__(ConnectionData(self.__client, Constance.ADDR))
+        self.__user_data = user_data
         self.connection_data.get_conn().connect(self.connection_data.get_addr())
         self.open_connection()
 

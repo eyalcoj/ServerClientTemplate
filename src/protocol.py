@@ -1,3 +1,4 @@
+import json
 import socket
 from enum import Enum
 
@@ -5,22 +6,22 @@ from enum import Enum
 class Constants:
     HEADER = 5
     FORMAT = 'utf-8'
-    PACKET_ID_LENGTH = 1
 
 
 class PacketType(Enum):
+    ERROR = -1
     LOGIN = 0
     DISCONNECT = 1
 
 
-
-def __send_by_socket(payload: str, conn: socket.socket(socket.AF_INET, socket.SOCK_STREAM)):
+def __send_by_socket(payload: dict, conn: socket.socket(socket.AF_INET, socket.SOCK_STREAM)):
     try:
         if payload:
-            payload_length = len(payload)
+            payload_json = json.dumps(payload)
+            payload_length = len(payload_json)
             encode_payload_length = str(payload_length).encode(Constants.FORMAT)
             encode_payload_length = b' ' * (Constants.HEADER - len(encode_payload_length)) + encode_payload_length
-            conn.send(encode_payload_length + payload.encode(Constants.FORMAT))
+            conn.send(encode_payload_length + payload_json.encode(Constants.FORMAT))
 
     except Exception as e:
         print(f"[ERROR] in send_package: {e}")
@@ -38,20 +39,30 @@ def __receive_by_socket(conn: socket.socket(socket.AF_INET, socket.SOCK_STREAM))
         print(f"[ERROR] in send_package: {e}")
 
 
-def __wrap_packet(packet_type: PacketType, payload: str):  # why is payload string and not bytes?
-    return packet_type.value + payload
+def __wrap_packet(packet_type: PacketType, payload: str):
+    packet_dict = {
+        "type": packet_type.value,
+        "data": payload
+    }
+    return packet_dict
 
 
 def __extract_packet(payload: str):
-    packet_type = payload[:Constants.PACKET_ID_LENGTH]
-    data = payload[Constants.PACKET_ID_LENGTH:]
+    packet_dict = json.loads(payload)
+    packet_type = packet_dict["type"]
+    data = packet_dict["data"]
     return packet_type, data
 
 
 def send2(packet_type: PacketType, payload: str, conn: socket.socket(socket.AF_INET, socket.SOCK_STREAM)):
-    __send_by_socket(__wrap_packet(packet_type, payload), conn)
+    packet_dict = __wrap_packet(packet_type, payload)
+    __send_by_socket(packet_dict, conn)
 
 
 def recv2(conn: socket.socket(socket.AF_INET, socket.SOCK_STREAM)):
-    print(__receive_by_socket(conn))
-    return __extract_packet(__receive_by_socket(conn))
+    packet_json = __receive_by_socket(conn)
+    if packet_json:
+        packet_type, data = __extract_packet(packet_json)
+        return PacketType(packet_type), data
+    else:
+        return PacketType.ERROR, ""

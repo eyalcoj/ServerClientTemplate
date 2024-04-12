@@ -5,21 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0007d325-bebf-4e90-921e-554a6b2874f5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/server/communication/server_client_connection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/communication/server_connection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/db/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/db/user_data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/db/users_db.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/server.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/user.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/user_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/abstract_user_things.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/abstract_user_things.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/application.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/communication.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/communication.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/gui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/protocol.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/application.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/communication.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/db.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/communication/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/gui/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/gui/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/communication/server_client_connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/communication/server_client_connection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/db/user_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/db/user_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/gui/admin_user_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/gui/admin_user_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/user.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,10 +173,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main_client" />
         <item itemvalue="Python.main_server (1)" />
         <item itemvalue="Python.server" />
         <item itemvalue="Python.admin_user_data" />
-        <item itemvalue="Python.main_client" />
         <item itemvalue="Python.application" />
       </list>
     </recent_temporary>

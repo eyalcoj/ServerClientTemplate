@@ -1,4 +1,4 @@
-from src.client.application import ClientApplication
+from src.client.client import Client
 
 if __name__ == "__main__":
-    client = ClientApplication()
+    client = Client()

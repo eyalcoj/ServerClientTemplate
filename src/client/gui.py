@@ -1,10 +1,15 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel
 
+from src.client.communication import ClientServerConnection
+from src.client.user_data import ClientUserData
+
 
 class MyGUI(QWidget):
-    def __init__(self):
+    def __init__(self, conn: ClientServerConnection, user_data: ClientUserData):
         super().__init__()
+        self.__conn = conn
+        self.__user_data = user_data
         self.initUI()
 
     def initUI(self):
