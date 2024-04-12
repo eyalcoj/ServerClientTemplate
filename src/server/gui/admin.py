@@ -1,22 +1,26 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QListWidget
 
+from src.server.communication.server_connection import ServerConnection
 from src.server.gui.admin_user_data import AdminUserDataWindow
+from src.server.db.users_db import UsersDatabase
 
 
 class AdminMainWindow(QWidget):
-    def __init__(self):
+    def __init__(self, conn: ServerConnection, users_database: UsersDatabase):
         super().__init__()
         self.usersQList = QListWidget()
+        self.__conn = conn
+        self.__users_database = users_database
         self.initUI()
 
-    def initUI(self):
+    def initUI(self, ):
         self.setWindowTitle('Clickable Rows')
         self.layout = QVBoxLayout()
 
         self.usersQList.itemClicked.connect(self.on_item_clicked)
         self.add_row_button = QPushButton('Add Row')
-        self.add_row_button.clicked.connect(lambda: self.add_list_item("shalom"))
+        self.add_row_button.clicked.connect(lambda: self.add_list_item())
 
         self.layout.addWidget(self.usersQList)
         self.layout.addWidget(self.add_row_button)

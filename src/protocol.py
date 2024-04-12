@@ -9,7 +9,9 @@ class Constants:
 
 
 class PacketType(Enum):
-    DISCONNECT = 0
+    LOGIN = 0
+    DISCONNECT = 1
+
 
 
 def __send_by_socket(payload: str, conn: socket.socket(socket.AF_INET, socket.SOCK_STREAM)):

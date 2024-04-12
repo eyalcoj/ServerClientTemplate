@@ -1,13 +1,14 @@
-import sys
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel
 
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel
+from src.server.communication.server_client_connection import ServerClientConnection
+from src.server.user import ServerUserDatabase
 
 
 class AdminUserDataWindow(QWidget):
-    def __init__(self, user_name, main_window):
+    def __init__(self, conn: ServerClientConnection, data_base: ServerUserDatabase):
         super().__init__()
-        self.user_name = user_name
-        self.main_window = main_window  # Reference to the main window
+        self.__dict = data_base
+        self.user_name = data_base.get_user().get("name")
         self.initUI()
 
     def initUI(self):
@@ -39,13 +40,8 @@ class AdminUserDataWindow(QWidget):
         else:
             label.setStyleSheet("background-color: red; border-radius: 10px;")
 
-    def remove_row(self):
-        # Call remove_selected_row method of AdminMainWindow instance
-        self.main_window.remove_selected_row()
-
-
 # if __name__ == '__main__':
 #     app = QApplication(sys.argv)
-#     gui = AdminUserDataWindow("User Name", None)  # Pass None for the main_window argument for testing
+#     gui = AdminUserDataWindow("User Name", None, None)  # Pass None for the main_window argument for testing
 #     gui.show()
 #     sys.exit(app.exec_())

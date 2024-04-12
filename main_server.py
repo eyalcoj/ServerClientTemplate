@@ -1,4 +1,4 @@
-from src.server.application import ServerApplication
+from src.server.server import Server
 
 if __name__ == "__main__":
-    server = ServerApplication()
+    server = Server()
